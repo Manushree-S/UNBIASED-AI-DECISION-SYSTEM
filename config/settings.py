@@ -1,7 +1,3 @@
-"""
-Django settings for config project.
-"""
-
 from pathlib import Path
 import os
 
@@ -12,7 +8,7 @@ SECRET_KEY = 'django-insecure-zx%0kpgb1_%f2!1q21533dqtyz5f38np^m7xhe2*71ymhh_92z
 
 DEBUG = False
 
-# ✅ IMPORTANT FIX (Render-safe)
+# ✅ Render-safe ALLOWED_HOSTS
 ALLOWED_HOSTS = [
     'unbiased-ai-decision-system-mfg6.onrender.com',
     'localhost',
@@ -62,7 +58,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# DATABASE (OK for MVP, but see note below)
+# ⚠️ DATABASE (THIS IS OK FOR MVP BUT CAUSES YOUR ERROR ON RENDER)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -72,8 +68,6 @@ DATABASES = {
 
 # Static files
 STATIC_URL = '/static/'
-
-# ✅ IMPORTANT FIX for Render
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -82,5 +76,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Security defaults
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
