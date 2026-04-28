@@ -32,8 +32,6 @@ manage.py
 
 1. Clone repository
 2. Install requirements
-
-```bash
-pip install django pandas scikit-learn
+    pip install django pandas scikit-learn
 3.Run server
-python manage.py runserver
+    python manage.py runserver
