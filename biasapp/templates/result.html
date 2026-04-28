@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bias Report</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            width: 500px;
+            margin: 50px auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        .result {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .bias {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .danger { color: red; }
+        .safe { color: green; }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>📊 Bias Analysis Report</h2>
+
+    <p class="result">Male Selection Rate: {{ male_rate }}</p>
+    <p class="result">Female Selection Rate: {{ female_rate }}</p>
+    <p class="result">Bias Score: {{ bias_score }}</p>
+
+    <!-- ✅ NEW -->
+    <p class="result">Model Accuracy: {{ accuracy }}</p>
+
+    {% if bias_score > 0.2 %}
+        <p class="bias danger">⚠ Bias Detected</p>
+    {% else %}
+        <p class="bias safe">✔ Fair System</p>
+    {% endif %}
+
+    <canvas id="biasChart"></canvas>
+
+    <button onclick="goBack()">Upload Another Dataset</button>
+
+</div>
+
+<script>
+    const ctx = document.getElementById('biasChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Male', 'Female'],
+            datasets: [{
+                label: 'Selection Rate',
+                data: [{{ male_rate|default:0 }}, {{ female_rate|default:0 }}],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 1
+                }
+            }
+        }
+    });
+
+    function goBack() {
+        window.location.href = "/";
+    }
+</script>
+
+</body>
+</html>
